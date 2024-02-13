@@ -31,14 +31,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/*
- * View model of Dessert Release components
- */
 class DessertReleaseViewModel(private val userPreferencesRepository: UserPreferencesRepository) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DessertReleaseUiState())
 
-    // UI states access for various [DessertReleaseUiState]
     val uiState: StateFlow<DessertReleaseUiState> = userPreferencesRepository.isLinearLayout.map { isLinearLayout ->
         DessertReleaseUiState(isLinearLayout)
     }.stateIn(
@@ -47,10 +43,6 @@ class DessertReleaseViewModel(private val userPreferencesRepository: UserPrefere
         initialValue = DessertReleaseUiState()
     )
 
-    /*
-     * [selectLayout] change the layout and icons accordingly and
-     * save the selection in DataStore through [userPreferencesRepository]
-     */
     fun selectLayout(isLinearLayout: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.saveLayoutPreference(isLinearLayout)
